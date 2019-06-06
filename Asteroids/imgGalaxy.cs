@@ -9,12 +9,14 @@ namespace Asteroids
 {
     class ImgGalaxy : BaseObject
     {
-        public ImgGalaxy(Point pos, Point dir) : base(pos, dir, new Size(0,0))
+        public string path;
+        public ImgGalaxy(Point pos, Point dir, string path) : base(pos, dir, new Size(0,0))
         {
+            this.path = path;
         }
         public override void Draw()
         {
-            Image image = Image.FromFile("galaxy1.jpg");
+            Image image = Image.FromFile(path);
             Game.Buffer.Graphics.DrawImage(image, Pos);
         }
     }

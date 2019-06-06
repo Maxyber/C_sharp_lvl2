@@ -33,12 +33,18 @@ namespace Asteroids
             if (Pos.Y < 0) Dir.Y = -Dir.Y;
             if (Pos.Y > Game.Height) Dir.Y = -Dir.Y;
             */
-            // Тут объект при достижении края экрана продолжает движение из центра
+            /* Тут объект при достижении края экрана продолжает движение из центра
             if (((Pos.X < 0) || (Pos.X > Game.Width)) || ((Pos.Y < 0) || (Pos.Y > Game.Height)))
             {
                 Pos.X = Game.Width / 2;
                 Pos.Y = Game.Height / 2;
             }
+            */
+            // Тут объект при достижении края экрана продолжает движение с другого края
+            if (Pos.X < 0 - Size.Width) Pos.X = Game.Width + Size.Width;
+            if (Pos.X > Game.Width + Size.Width) Pos.X = 0 - Size.Width;
+            if (Pos.Y < 0 - Size.Height) Pos.Y = Game.Height + Size.Height;
+            if (Pos.Y > Game.Height + Size.Height) Pos.Y = 0 - Size.Height;
             //
         }
     }
