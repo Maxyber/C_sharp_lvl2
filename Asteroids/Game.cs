@@ -18,6 +18,7 @@ namespace Asteroids
         public static int Height { get; set; }
         public static BaseObject[] _objs;
         public static List<BackgroundStar> background;
+        public static Random r = new Random();
 
         static Game()
         {
@@ -38,7 +39,7 @@ namespace Asteroids
             // Вызываем рисование определенного количества объектов на поле
             Load(50);
             // Добавляем таймер обновления прорисовки объектов
-            Timer timer = new Timer { Interval = 20 };
+            Timer timer = new Timer { Interval = 10 };
             timer.Start();
             timer.Tick += Timer_Tick;
             // Формируем список звезд для заднего фона
@@ -99,19 +100,17 @@ namespace Asteroids
         // Далее мы рисуем count объектов, которые в дальнейшем будут перемещаться по полю
         public static void Load(int count)
         {
-            Random r = new Random();
             _objs = new BaseObject[count];
             for (int i = 0; i < _objs.Length; i++)
             {
                 int rnd = r.Next(300);
                 if (rnd >= 1 && rnd < 180)
-                    _objs[i] = new Star(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), new Size(12, 12));
+                    _objs[i] = new Star(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(10) + 1), 0), new Size(12, 12));
                 else if (rnd >= 180 && rnd < 250)
-                    _objs[i] = new Star(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), new Size(24, 24));
+                    _objs[i] = new Star(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(10) + 1), 0), new Size(24, 24));
                 else
                 {
-                    Image image = Image.FromFile($"Resources/galaxy{r.Next(4)+1}.jpg");
-                    _objs[i] = new ImgGalaxy(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), image);
+                    _objs[i] = new ImgGalaxy(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(10) + 1), 0));
                 }
             }
         }
