@@ -110,8 +110,8 @@ namespace Asteroids
                     _objs[i] = new Star(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), new Size(24, 24));
                 else
                 {
-                    string path = $"galaxy{r.Next(4)+1}.jpg";
-                    _objs[i] = new ImgGalaxy(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), path);
+                    Image image = Image.FromFile($"Resources/galaxy{r.Next(4)+1}.jpg");
+                    _objs[i] = new ImgGalaxy(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(20) + 1), 0), image);
                 }
             }
         }

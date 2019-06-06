@@ -9,10 +9,10 @@ namespace Asteroids
 {
     class ImgGalaxy : BaseObject
     {
-        public Image image;
-        public ImgGalaxy(Point pos, Point dir, string path) : base(pos, dir, new Size(0,0))
+        private Image image;
+        public ImgGalaxy(Point pos, Point dir, Image image) : base(pos, dir, new Size(0,0))
         {
-            image = Image.FromFile(path);
+            this.image = image;
         }
         public override void Draw()
         {
