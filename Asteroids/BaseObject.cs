@@ -19,6 +19,15 @@ namespace Asteroids
             Dir = dir;
             Size = size;
         }
+        public Point GetPos
+        {
+            get { return Pos; }
+        }
+        public Size OSize
+        {
+            get { return Size; }
+            set { Size = value; }
+        }
         public virtual void Draw()
         {
             Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);

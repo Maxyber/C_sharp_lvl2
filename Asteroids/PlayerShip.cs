@@ -7,12 +7,12 @@ using System.Drawing;
 
 namespace Asteroids
 {
-    class ImgGalaxy : BaseObject
+    class PlayerShip : BaseObject
     {
         private Image image;
-        public ImgGalaxy(Point pos, Point dir) : base(pos, dir, new Size(0,0))
+        public PlayerShip(Point pos) : base(pos, new Point(0,0), new Size(0, 0))
         {
-            image = Image.FromFile($"Resources/galaxy{Game.r.Next(4) + 1}.jpg");
+            image = Image.FromFile($"Resources/ship1.png");
             OSize = new Size(image.Width, image.Height);
         }
         public override void Draw()

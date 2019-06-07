@@ -96,12 +96,13 @@ namespace Asteroids
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+            CheckConnection();
         }
         // Далее мы рисуем count объектов, которые в дальнейшем будут перемещаться по полю
         public static void Load(int count)
         {
-            _objs = new BaseObject[count];
-            for (int i = 0; i < _objs.Length; i++)
+            _objs = new BaseObject[count + 1];
+            for (int i = 0; i < _objs.Length - 1; i++)
             {
                 int rnd = r.Next(300);
                 if (rnd >= 1 && rnd < 180)
@@ -113,6 +114,31 @@ namespace Asteroids
                     _objs[i] = new ImgGalaxy(new Point(r.Next(Width), r.Next(Height)), new Point(-1 * (r.Next(10) + 1), 0));
                 }
             }
+            _objs[_objs.Length - 1] = new PlayerShip(new Point(20, Height / 2));
+        }
+        private static void CheckConnection()
+        {
+            foreach (BaseObject obj in _objs)
+            {
+                if (CheckCrash(_objs[_objs.Length - 1].GetPos, obj.GetPos, _objs[_objs.Length - 1].OSize, obj.OSize) == true)
+                    Crash(_objs[_objs.Length - 1].GetPos, _objs[_objs.Length - 1].OSize);
+            }
+        }
+        private static bool CheckCrash(Point pObj, Point pTarget, Size sObj, Size sTarget)
+        {
+            bool flag = false;
+            if (((pTarget.X > pObj.X) && (pTarget.X < pObj.X + sObj.Width)) || ((pTarget.X + sTarget.Width > pObj.X) && (pTarget.X + sTarget.Width < pObj.X + sObj.Width)))
+                if (((pTarget.Y > pObj.Y) && (pTarget.Y < pObj.Y + sObj.Height)) || ((pTarget.Y + sTarget.Height > pObj.Y) && (pTarget.Y + sTarget.Height < pObj.Y + sObj.Height)))
+                    flag = true;
+            return flag;
+        }
+        private static void Crash(Point pos, Size size)
+        {
+            Image image = Image.FromFile("Resources/explosion.png");
+            pos.X = pos.X + (size.Width - image.Width) / 2;
+            pos.Y = pos.Y + (size.Height - image.Height) / 2;
+            Buffer.Graphics.DrawImage(image, pos);
+            Buffer.Render();
         }
     }
 }
