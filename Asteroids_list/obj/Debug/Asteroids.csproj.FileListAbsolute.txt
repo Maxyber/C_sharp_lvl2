@@ -1,0 +1,32 @@
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Asteroids.exe.config
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Asteroids.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Asteroids.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.Properties.Resources.resources
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.csproj.GenerateResource.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.csproj.CoreCompileInputs.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.frmMain.resources
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\galaxy1.jpg
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\galaxy2.jpg
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\galaxy3.jpg
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\galaxy4.jpg
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\ship1.png
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\obj\Debug\Asteroids.csprojAssemblyReference.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids\bin\Debug\Resources\explosion.png
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\explosion.png
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\galaxy1.jpg
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\galaxy2.jpg
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\galaxy3.jpg
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\galaxy4.jpg
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\ship1.png
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Asteroids.exe.config
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Asteroids.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Asteroids.pdb
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.csprojAssemblyReference.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.frmMain.resources
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.Properties.Resources.resources
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.csproj.GenerateResource.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.csproj.CoreCompileInputs.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\obj\Debug\Asteroids.pdb

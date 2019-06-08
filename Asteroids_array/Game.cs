@@ -17,6 +17,7 @@ namespace Asteroids
         public static int Width { get; set; }
         public static int Height { get; set; }
         public static BaseObject[] _objs;
+        public static int objID;
         public static List<BackgroundStar> background;
         public static Random r = new Random();
 
