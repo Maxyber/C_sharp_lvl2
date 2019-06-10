@@ -59,5 +59,17 @@ namespace Asteroids
                     break;
             }
         }
+
+        private void frmMain_ResizeEnd(object sender, EventArgs e)
+        {
+            try
+            {
+                if ((ClientSize.Width > 1600) || (ClientSize.Height > 900)) throw new ArgumentOutOfRangeException("form resize", "client size too big");
+                if ((ClientSize.Width < 160) || (ClientSize.Height < 90)) throw new ArgumentOutOfRangeException("Form resize", "client size too low");
+            }
+            catch
+            {
+            }
+        }
     }
 }

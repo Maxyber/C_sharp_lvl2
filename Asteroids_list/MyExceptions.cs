@@ -4,25 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Asteroids
 {
     class MyExceptions : Exception
     {
-        public MyExceptions(string msg)
+        string msg;
+
+        public override string Message => this.msg;
+
+        public int Error { get; set; }
+
+        public MyExceptions(string Msg, int Error)
         {
-            MessageBox.Show(msg);
-            Application.Exit();
+            this.Error = Error;
+            this.msg = Msg;
         }
-        public void ArgumentOutOfRangeException(string msg)
+
+        public override string ToString()
         {
-            MessageBox.Show(msg);
-            Application.Exit();
+            return $"{this.Error} {base.Message} {this.msg}";
         }
-        public void GameObjectException(string msg)
+        public void ToFile()
         {
-            MessageBox.Show(msg);
-            Application.Exit();
+            using (StreamWriter sw = new StreamWriter(@"Logs\logs.txt", true))
+                sw.WriteLine($"{DateTime.Now} ... {ToString()}");
         }
     }
 }
