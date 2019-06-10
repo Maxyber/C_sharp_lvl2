@@ -21,7 +21,16 @@ namespace Asteroids
         public static int objID = 1;
         public static List<BackgroundStar> background;
         public static Random r = new Random();
-
+        // Флаги управления кораблем
+        public static bool flagUp = false;
+        public static bool flagDown = false;
+        public static bool flagLeft = false;
+        public static bool flagRight = false;
+        // Внутриигровые параметры
+        public static int score = 0; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
+        public static int level = 1; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
+        public static int shipSpeed = 1; // максимальное значение - 3, шаг 1
+        public static int shipRapidFire = 25; // максимальное значение - 150, шаг 5
         static Game()
         {
         }
@@ -36,6 +45,10 @@ namespace Asteroids
             // Запоминаем размеры формы
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
+            // НЕОБХОДИМО РАЗОБРАТЬСЯ И ДОДЕЛАТЬ Обработка исключения в случае превышение размеров игрового поля
+            Size resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Size;
+            if (resolution.Width < 1600) throw new MyExceptions("Разрешение экрана по горизонтали меньше минимально допустимого 1600");
+            if (resolution.Height < 900) throw new MyExceptions("Разрешение экрана по вертикали меньше минимально допустимого 900");
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
             // Вызываем рисование определенного количества объектов на поле
@@ -53,7 +66,8 @@ namespace Asteroids
         {
             Draw();
             Update();
-            if (r.Next(1000) > 975) FireBullet();
+            if (r.Next(1000) > (1000 - shipRapidFire)) FireBullet();
+            if (r.Next(1000) > 995) AddBonus();
         }
         // Создаем список "звезд" для заднего фона
         public static List<BackgroundStar> SpaceCreate(int count)
@@ -93,6 +107,7 @@ namespace Asteroids
                 Pen pen = new Pen(bs.GetColor);
                 Buffer.Graphics.DrawRectangle(pen, bs.Position.X, bs.Position.Y, bs.GetSize.Width, bs.GetSize.Height);
             }
+            Buffer.Graphics.DrawString($"Speed: {shipSpeed}   FireSpeed: {shipRapidFire / 5 - 4}", new Font(FontFamily.GenericSansSerif, 20), new SolidBrush(Color.White), 20, 20);
         }
         // Обновляем каждый объект по движению
         public static void Update()
@@ -101,7 +116,7 @@ namespace Asteroids
             foreach (BaseObject obj in _objs)
             {
                 obj.Update();
-                if ((obj is Bullet) && (obj.GetDir == new Point(0, 0)))
+                if (((obj is Bullet) || (obj is ShipBonus)) && (obj.ODir == new Point(0, 0)))
                 {
                     indexes.Add(_objs.IndexOf(obj));
                 }
@@ -136,6 +151,7 @@ namespace Asteroids
             shipIndex = objID - 1;
             objID++;
         }
+        // Проверяем объекты на столкновение, на данный момент столкновение целей между собой невозможно
         private static void CheckConnection()
         {
             List<int> indexes = new List<int>();
@@ -151,7 +167,7 @@ namespace Asteroids
                 {
                     foreach (BaseObject obj2 in _objs)
                     {
-                        if ((CheckCrash(obj.GetPos, obj2.GetPos, obj.OSize, obj2.OSize, obj.GetDir) == true) && !(obj2 is Bullet))
+                        if ((CheckCrash(obj.GetPos, obj2.GetPos, obj.OSize, obj2.OSize, obj.ODir) == true) && !(obj2 is Bullet) && !(obj2 is ShipBonus))
                         {
                             Crash(obj, obj2);
                             indexes.Add(_objs.IndexOf(obj));
@@ -159,22 +175,29 @@ namespace Asteroids
                         }
                     }
                 }
+                if (obj is ShipBonus)
+                {
+                    if (CheckCrash(obj.GetPos, _objs[shipIndex].GetPos, obj.OSize, _objs[shipIndex].OSize, obj.ODir) == true)
+                    {
+                        switch (obj.OBonType)
+                        {
+                            case 1:
+                                if (shipRapidFire < 150) shipRapidFire = shipRapidFire + 5;
+                                break;
+                            case 2:
+                                if (shipSpeed < 3) shipSpeed++;
+                                break;
+                        }
+                        indexes.Add(_objs.IndexOf(obj));
+                    }
+                }
             }
             ListRemove(indexes);
         }
+        // Проверка наложения двух целей для определения столкновения, в случае успехва возвращается ture
         private static bool CheckCrash(Point pObj, Point pTarget, Size sObj, Size sTarget, Point spObj)
         {
             bool flag = false;
-            /*
-            if (((pTarget.X >= pObj.X) && (pTarget.X <= pObj.X + sObj.Width)) || ((pTarget.X + sTarget.Width >= pObj.X) && (pTarget.X + sTarget.Width <= pObj.X + sObj.Width)))
-                if (((pTarget.Y >= pObj.Y) && (pTarget.Y <= pObj.Y + sObj.Height)) || ((pTarget.Y + sTarget.Height >= pObj.Y) && (pTarget.Y + sTarget.Height <= pObj.Y + sObj.Height)))
-                    flag = true;
-                    */
-            /*
-    Buffer.Graphics.DrawRectangle(Pens.Blue, pTarget.X,pTarget.Y, sTarget.Width, sTarget.Height);
-    Buffer.Graphics.DrawRectangle(Pens.Red, pObj.X, pObj.Y, sObj.Width + spObj.X, sObj.Height + spObj.Y);
-    Buffer.Render();
-    */
             if ((((pTarget.X >= pObj.X) && (pTarget.X <= pObj.X + sObj.Width + spObj.X)) || ((pTarget.X + sTarget.Width >= pObj.X) && (pTarget.X + sTarget.Width <= pObj.X + sObj.Width + spObj.X))) ||
                 ((pObj.X >= pTarget.X) && (pObj.X <= pTarget.X + sTarget.Width)) || ((pObj.X + sObj.Width + spObj.X >= pTarget.X) && (pObj.X + sObj.Width + spObj.X <= pTarget.X + sTarget.Width)))
                 if ((((pTarget.Y >= pObj.Y) && (pTarget.Y <= pObj.Y + sObj.Height + spObj.Y)) || ((pTarget.Y + sTarget.Height >= pObj.Y) && (pTarget.Y + sTarget.Height <= pObj.Y + sObj.Height + spObj.Y))) ||
@@ -182,6 +205,7 @@ namespace Asteroids
                     flag = true;
             return flag;
         }
+        // Отрисовка столкновения двух объектов
         private static void Crash(BaseObject obj1, BaseObject obj2)
         {
             Point pos = new Point();
@@ -190,20 +214,26 @@ namespace Asteroids
             pos.Y = obj1.GetPos.Y + (obj1.OSize.Height - image.Height) / 2;
             Buffer.Graphics.DrawImage(image, pos);
             Buffer.Render();
-            // System.Threading.Thread.Sleep(1000);
+            // System.Threading.Thread.Sleep(1000); // заготовка для slow motion
         }
+        // Выстрел из пушки корабля
         public static void FireBullet()
         {
-            // 24 32 40
+            // Отступы от координаты расположение корабля для выстрелов из пушек - 23 31 39
             int yStart = _objs[shipIndex].GetPos.Y + 23 + r.Next(3) * 8;
             int xStart = _objs[shipIndex].GetPos.X + _objs[shipIndex].OSize.Width + 1;
-            /*
-            int yStart = _objs[shipIndex].GetPos.Y;
-            int xStart = _objs[shipIndex].GetPos.X+100;
-            */
             _objs.Add(new Bullet(objID, new Point(xStart, yStart), new Point(20, r.Next(5) - 2), new Size(20, 3)));
             objID++;
         }
+        // Добавляем на игровое поле бонус
+        public static void AddBonus()
+        {
+            int yStart = r.Next(Height);
+            int xStart = Width;
+            _objs.Add(new ShipBonus(objID, new Point(xStart, yStart), new Point(-4, 0)));
+            objID++;
+        }
+        // Удаление объектов с игрового поля с помощью списка индексов объектов для удаления
         private static void ListRemove(List<int> indexes)
         {
             // Сортировка массива
@@ -225,6 +255,7 @@ namespace Asteroids
             }
             if (_objs.Count == 1) GameOver();
         }
+        // ПОКА НЕ РАБОТАЕТ Конец игры, тут необходимо добавить сообщение "Конец игры", набранные очки и после этого предложить пользователю выйти или начать новую игру
         private static void GameOver()
         {
             Application.Exit();

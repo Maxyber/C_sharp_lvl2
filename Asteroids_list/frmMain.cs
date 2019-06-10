@@ -12,6 +12,11 @@ namespace Asteroids
 {
     public partial class frmMain : Form
     {
+        bool flagUp = false;
+        bool flagDown = false;
+        bool flagLeft = false;
+        bool flagRight = false;
+        bool flagFire = false;
         public frmMain()
         {
             InitializeComponent();
@@ -19,6 +24,40 @@ namespace Asteroids
 
         private void frmMain_KeyDown(object sender, KeyEventArgs e)
         {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    Game.flagUp = true;
+                    break;
+                case Keys.A:
+                    Game.flagLeft = true;
+                    break;
+                case Keys.S:
+                    Game.flagDown = true;
+                    break;
+                case Keys.D:
+                    Game.flagRight = true;
+                    break;
+            }
+        }
+
+        private void FrmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    Game.flagUp = false;
+                    break;
+                case Keys.A:
+                    Game.flagLeft = false;
+                    break;
+                case Keys.S:
+                    Game.flagDown = false;
+                    break;
+                case Keys.D:
+                    Game.flagRight = false;
+                    break;
+            }
         }
     }
 }

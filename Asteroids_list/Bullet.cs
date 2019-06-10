@@ -23,5 +23,12 @@ namespace Asteroids
             Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, Pos.X, Pos.Y, Size.Width, Size.Height);
             // Game.Buffer.Graphics.DrawImage(image, Pos); Будет необходимо, когда выстрел будет графическим изображением, а не просто отрезком
         }
+        public override void Update()
+        {
+            Pos.X = Pos.X + Dir.X;
+            Pos.Y = Pos.Y + Dir.Y;
+            if ((Pos.X < 0 - Size.Width) || (Pos.X > Game.Width + Size.Width))
+                Dir = new Point(0, 0);
+        }
     }
 }

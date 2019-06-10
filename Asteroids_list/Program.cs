@@ -14,7 +14,7 @@ namespace Asteroids
         [STAThread]
         static void Main(string[] args)
         {
-            Form form = new Form();
+            frmMain form = new frmMain();
             form.Width = 1600;
             form.Height = 900;
             Game.Init(form);
