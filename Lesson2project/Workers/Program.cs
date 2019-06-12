@@ -29,18 +29,18 @@ namespace Workers
                 index++;
             }
             // Выводим в консоль список компании
-            do
+            foreach (var obj in list)
             {
-                Console.WriteLine(list.Current.ToString());
-            } while (list.MoveNext());
+                Console.WriteLine(obj.ToString());
+            }
             // Сортируем список
             list.Sort();
             Console.WriteLine("Далее выводим отсортированный по возрасту массив с использованием интерфейса ISort");
             // Выводим на экран отсортированный список компании
-            do
+            foreach (var obj in list)
             {
-                Console.WriteLine(list.Current.ToString());
-            } while (list.MoveNext());
+                Console.WriteLine(obj.ToString());
+            }
             Console.ReadKey();
         }
     }

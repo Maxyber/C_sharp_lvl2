@@ -7,12 +7,10 @@ using System.Collections;
 
 namespace Workers
 {
-    class Company : ISort, IEnumerator
+    class Company : IEnumerable
     {
         Worker_basic[] List;
         int Count;
-        int counter = 0;
-
 
         public Company(Worker_basic[] list, int count)
         {
@@ -30,21 +28,13 @@ namespace Workers
             else Console.WriteLine($"{Count} < {List.Length}");
         }
         // Метод использования для foreach
-        public bool MoveNext()
+        public IEnumerator GetEnumerator()
         {
-            counter++;
-            if (counter == Count)
+            for (int i = 0; i < this.List.Length; i++)
             {
-                Reset();
-                return false;
+                yield return this.List[i];
             }
-            else return true;
         }
-        public void Reset()
-        {
-            counter = 0;
-        }
-        public object Current { get { return List[counter]; } }
         // Метод сортировки компании по возрасту/зарплате
         public void Sort()
         {
