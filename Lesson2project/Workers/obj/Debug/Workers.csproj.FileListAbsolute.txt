@@ -1,0 +1,7 @@
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\obj\Debug\Workers.csprojAssemblyReference.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\obj\Debug\Workers.csproj.CoreCompileInputs.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\bin\Debug\Workers.exe.config
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\bin\Debug\Workers.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\bin\Debug\Workers.pdb
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\obj\Debug\Workers.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson2project\Workers\obj\Debug\Workers.pdb
