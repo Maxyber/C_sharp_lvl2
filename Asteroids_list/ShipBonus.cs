@@ -11,10 +11,11 @@ namespace Asteroids
     {
         private Image image;
 
-        public ShipBonus(int id, Point pos, Point dir) : base(id, pos, dir, new Size(0, 0))
+        public ShipBonus(int id, Point pos, Point dir) : base(id, pos, dir, new Size(0, 0), 0)
         {
             int type = Game.r.Next(100) + 1;
-            if (type > 90) OBonType = 2;
+            if (type > 95) OBonType = 3;
+            else if ((type > 87) && (type <= 95)) OBonType = 2;
             else OBonType = 1;
             image = Image.FromFile($"Resources/bonus{OBonType}.png");
             OSize = new Size(image.Width, image.Height);
@@ -32,6 +33,9 @@ namespace Asteroids
             Pos.Y = Pos.Y + Dir.Y;
             if ((Pos.X < 0 - Size.Width) || (Pos.X > Game.Width + Size.Width))
                 Dir = new Point(-100, -100);
+        }
+        public override void Die()
+        {
         }
     }
 }

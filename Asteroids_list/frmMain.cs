@@ -12,11 +12,6 @@ namespace Asteroids
 {
     public partial class frmMain : Form
     {
-        bool flagUp = false;
-        bool flagDown = false;
-        bool flagLeft = false;
-        bool flagRight = false;
-        bool flagFire = false;
         public frmMain()
         {
             InitializeComponent();

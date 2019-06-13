@@ -13,6 +13,8 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
+        // Таймер игры
+        public static Timer _timer = new Timer { Interval = 7 };
         // Свойства
         // Ширина и высота игрового поля
         public static int Width { get; set; }
@@ -28,11 +30,18 @@ namespace Asteroids
         public static bool flagLeft = false;
         public static bool flagRight = false;
         // Внутриигровые параметры
+        public static int defaultShipEnergy = 500;
+        public static int defaultStarEnergy = 5;
+        public static int defaultGalaxyEnergy = 25;
         public static int score = 0; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
         public static int level = 1; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
         public static int targets = 50; // количество оставшихся целей на игровом поле, все цели без пуль, корабля и бонусов. Зависит от уровня, для первого уровня составляет 50 целей.
         public static int shipSpeed = 1; // максимальное значение - 3, шаг 1
+        public static int maxShipSpeed = 4;
         public static int shipRapidFire = 25; // максимальное значение - 150, шаг 5
+        public static int maxShipRapidFire = 400;
+        // Делегаты для ведения логов игры
+        public delegate void WriteLog(string s);
         static Game()
         {
         }
@@ -55,18 +64,17 @@ namespace Asteroids
             // Вызываем рисование определенного количества объектов на поле
             Load(targets);
             // Добавляем таймер обновления прорисовки объектов
-            Timer timer = new Timer { Interval = 7 };
-            timer.Start();
-            timer.Tick += Timer_Tick;
+            //Timer timer = new Timer { Interval = 7 };
+            _timer.Start();
+            _timer.Tick += Timer_Tick;
+            // Подписываемся на событие смерти корабля
+            PlayerShip.MessageDie += GameOver;
             // Формируем список звезд для заднего фона
             background = new List<BackgroundStar>();
             background = SpaceCreate(Width * Height / 5000);
             // Проверяем файл логов для отлова эксепшенов, в случае его отсутствия - создаем
-            if (!Directory.Exists("Logs"))
-            {
-                Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"));
-            }
-            if (!File.Exists(@"Logs\logs.txt")) using (File.Create(@"Logs\logs.txt")) { }
+            CheckFiles();
+
         }
         // Обработчик таймера
         public static void Timer_Tick(object sender, EventArgs e)
@@ -138,6 +146,7 @@ namespace Asteroids
                 {
                     indexes.Add(_objs.IndexOf(obj));
                 }
+               if (_objs[shipIndex].OEnergy <= 0) _objs[shipIndex]?.Die();
             }
             ListRemove(indexes);
             CheckConnection();
@@ -154,29 +163,31 @@ namespace Asteroids
         {
             switch (type)
             {
-                case "Star Big":
-                    _objs.Add(new Star(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0), new Size(24, 24)));
+                case "Star Big": // энергия 50
+                    _objs.Add(new Star(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0), new Size(24, 24), defaultStarEnergy * (level)*5/2));
                     break;
-                case "Star Small":
-                    _objs.Add(new Star(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0), new Size(12, 12)));
+                case "Star Small": // энергия 20
+                    _objs.Add(new Star(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0), new Size(12, 12), defaultStarEnergy * (level) * 5 / 2));
                     break;
-                case "Bullet":
+                case "Bullet": // энергия 10 по умолчанию
                     _objs.Add(new Bullet(objID, start, new Point(20, r.Next(5) - 2), new Size(20, 3)));
                     break;
-                case "Ship Bonus":
+                case "Ship Bonus": // энергия 0 по умолчанию
                     _objs.Add(new ShipBonus(objID, start, new Point(-4, 0)));
                     break;
-                case "Galaxy":
-                    _objs.Add(new ImgGalaxy(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0)));
+                case "Galaxy": // энергия 100
+                    _objs.Add(new ImgGalaxy(objID, new Point(r.Next(Width / 2) + Width / 2, r.Next(Height)), new Point(-1 * (r.Next(5) + 1), 0), defaultGalaxyEnergy * (level) * 5 / 2));
                     break;
-                case "Player Ship":
-                    _objs.Add(new PlayerShip(objID, new Point(20, Height / 2)));
+                case "Player Ship": // энергия 500
+                    _objs.Add(new PlayerShip(objID, new Point(20, Height / 2), defaultShipEnergy));
                     shipIndex = objID - 1;
                     break;
                 default:
                     break;
             }
             objID++;
+            WriteLog e = LogNewObject;
+            e($"{type}");
         }
         // Проверяем объекты на столкновение, на данный момент столкновение целей между собой невозможно
         private static void CheckConnection()
@@ -191,7 +202,7 @@ namespace Asteroids
                         if (CheckCrash(_objs[shipIndex].GetPos, obj.GetPos, _objs[shipIndex].OSize, obj.OSize, new Point(0, 0)) == true)
                         {
                             if (!(obj is ShipBonus)) Crash(_objs[shipIndex], obj);
-                            indexes.Add(_objs.IndexOf(obj));
+                            if (obj.OEnergy <= 0) indexes.Add(_objs.IndexOf(obj));
                         }
                     if (obj is Bullet)
                     {
@@ -201,7 +212,7 @@ namespace Asteroids
                             {
                                 Crash(obj, obj2);
                                 indexes.Add(_objs.IndexOf(obj));
-                                indexes.Add(_objs.IndexOf(obj2));
+                                if (obj2.OEnergy <= 0) indexes.Add(_objs.IndexOf(obj2));
                             }
                         }
                     }
@@ -212,10 +223,13 @@ namespace Asteroids
                             switch (obj.OBonType)
                             {
                                 case 1:
-                                    if (shipRapidFire < 150) shipRapidFire = shipRapidFire + 5;
+                                    if (shipRapidFire < maxShipRapidFire) shipRapidFire = shipRapidFire + 5;
                                     break;
                                 case 2:
-                                    if (shipSpeed < 3) shipSpeed++;
+                                    if (shipSpeed < maxShipSpeed) shipSpeed++;
+                                    break;
+                                case 3:
+                                    _objs[shipIndex].OEnergy += 100;
                                     break;
                             }
                         }
@@ -259,6 +273,11 @@ namespace Asteroids
             Image image = Image.FromFile("Resources/explosion.png");
             pos.X = obj1.GetPos.X + (obj1.OSize.Width - image.Width) / 2;
             pos.Y = obj1.GetPos.Y + (obj1.OSize.Height - image.Height) / 2;
+            // Применяем к обеим целям урон от столкновения
+            int obj1Damage = obj2.OEnergy;
+            int obj2Damage = obj1.OEnergy;
+            obj1.EnergyLow(obj1Damage);
+            obj2.EnergyLow(obj2Damage);
             Buffer.Graphics.DrawImage(image, pos);
             Buffer.Render();
             // System.Threading.Thread.Sleep(1000); // заготовка для slow motion
@@ -278,8 +297,8 @@ namespace Asteroids
         {
             int yStart = r.Next(Height);
             ObjectCreate("Ship Bonus", new Point(Width, yStart));
-            // _objs.Add(new ShipBonus(objID, new Point(Width, yStart), new Point(-4, 0)));
-            // objID++;
+            WriteLog e = LogEvent;
+            e("Ship Bonus created");
         }
         // Удаление объектов с игрового поля с помощью списка индексов объектов для удаления
         private static void ListRemove(List<int> indexes)
@@ -319,7 +338,11 @@ namespace Asteroids
         // ПОКА НЕ РАБОТАЕТ Конец игры, тут необходимо добавить сообщение "Конец игры", набранные очки и после этого предложить пользователю выйти или начать новую игру
         private static void GameOver()
         {
-            Application.Exit();
+            WriteLog e = LogEvent;
+            _timer.Stop();
+            e("PlayerShip destroyed");
+            Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.OrangeRed, (Width/2-120), (Height/2-30));
+            Buffer.Render();
         }
         private static void AddObjects(int count)
         {
@@ -340,6 +363,26 @@ namespace Asteroids
             level++;
             targets = 50 + (level - 1) * 10;
             AddObjects(targets);
+        }
+        public static void CheckFiles()
+        {
+            if (!Directory.Exists("Logs"))
+            {
+                Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"));
+            }
+            if (!File.Exists(@"Logs\logs.txt")) using (File.Create(@"Logs\logs.txt")) { }
+            if (!File.Exists(@"Logs\gamelogs.txt")) using (File.Create(@"Logs\gamelog.txt")) { }
+            if (!File.Exists(@"Logs\gamelogs.txt")) using (File.Create(@"Logs\newobjectslog.txt")) { }
+        }
+        public static void LogEvent(string s)
+        {
+            using (StreamWriter sw = new StreamWriter(@"Logs\gamelog.txt", true))
+                sw.WriteLine($"{DateTime.Now} произошло событие {s}");
+        }
+        public static void LogNewObject(string s)
+        {
+            using (StreamWriter sw = new StreamWriter(@"Logs\newobjectslog.txt", true))
+                sw.WriteLine($"{DateTime.Now} создан новый объект {s}");
         }
     }
 }

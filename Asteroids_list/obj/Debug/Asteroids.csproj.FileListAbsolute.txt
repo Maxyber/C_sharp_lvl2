@@ -39,7 +39,6 @@ C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\A
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\bin\Debug\Asteroids.exe.config
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\bin\Debug\Asteroids.exe
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\bin\Debug\Asteroids.pdb
-C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.csprojAssemblyReference.cache
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.frmMain.resources
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.Properties.Resources.resources
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.csproj.GenerateResource.cache
@@ -66,3 +65,5 @@ K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\Debug\Asteroids.csproj.CoreCompileInputs.cache
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\Debug\Asteroids.exe
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\Debug\Asteroids.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\bin\Debug\Resources\bonus3.png
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.csprojAssemblyReference.cache

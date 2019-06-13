@@ -10,7 +10,7 @@ namespace Asteroids
     class Bullet : BaseObject
     {
         // private Image image; Будет необходимо, когда выстрел будет графическим изображением, а не просто отрезком
-        public Bullet(int id, Point pos, Point dir, Size size) : base(id, pos, dir, size)
+        public Bullet(int id, Point pos, Point dir, Size size) : base(id, pos, dir, size, 10)
         {
             /* Будет необходимо, когда выстрел будет графическим изображением, а не просто отрезком
             image = Image.FromFile($"Resources/galaxy{Game.r.Next(4) + 1}.jpg");
@@ -31,6 +31,9 @@ namespace Asteroids
             Pos.Y = Pos.Y + Dir.Y;
             if ((Pos.X < 0 - Size.Width) || (Pos.X > Game.Width + Size.Width))
                 Dir = new Point(-100, -100);
+        }
+        public override void Die()
+        {
         }
     }
 }

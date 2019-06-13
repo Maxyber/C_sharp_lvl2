@@ -11,7 +11,8 @@ namespace Asteroids
     {
         private Image image;
 
-        public PlayerShip(int id, Point pos) : base(id, pos, new Point(0, 0), new Size(0, 0))
+        public static event Message MessageDie;
+        public PlayerShip(int id, Point pos, int energy) : base(id, pos, new Point(0, 0), new Size(0, 0), energy)
         {
             image = Image.FromFile($"Resources/ship1.png");
             OSize = new Size(image.Width, image.Height);
@@ -19,7 +20,9 @@ namespace Asteroids
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(image, Pos);
+            Game.Buffer.Graphics.DrawRectangle(Pens.Yellow, Pos.X, Pos.Y + OSize.Height + 1, (OEnergy * OSize.Width) / Game.defaultShipEnergy, 1);
             // ниже идет отладочная строка, которая выводит ID объекта сверху от него
+            //Game.Buffer.Graphics.DrawString($"{OEnergy}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y + Size.Height + 3);
             //Game.Buffer.Graphics.DrawString($"{GetID}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y - 12);
             //Game.Buffer.Graphics.DrawString($"{Pos.X},{Pos.Y}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y + Size.Height + 3);
         }
@@ -49,6 +52,10 @@ namespace Asteroids
         public void ChangeSpeed(Point dir)
         {
             ODir = dir;
+        }
+        public override void Die()
+        {
+            MessageDie?.Invoke();
         }
     }
 }
