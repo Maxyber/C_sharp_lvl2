@@ -10,12 +10,14 @@ namespace Asteroids
     class ImgGalaxy : BaseObject
     {
         private Image image;
+        public static event Message ObjectCreated;
 
         public ImgGalaxy(int id, Point pos, Point dir, int energy) : base(id, pos, dir, new Size(0, 0), energy)
         {
             image = Image.FromFile($"Resources/galaxy{Game.r.Next(4) + 1}.jpg");
             OSize = new Size(image.Width, image.Height);
-        }
+            ObjectCreated?.Invoke($"New galaxy created {id}, ({Pos.X},{Pos.Y}), speed: ({dir.X},{dir.Y})");
+    }
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(image, Pos);

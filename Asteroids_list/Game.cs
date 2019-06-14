@@ -13,8 +13,6 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
-        // Делегат логирования событий
-        public delegate void MakeLog(string msg);
         // Таймер игры
         public static Timer _timer = new Timer { Interval = 7 };
         // Свойства
@@ -38,17 +36,18 @@ namespace Asteroids
         public static int score = 0; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
         public static int level = 1; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ
         public static int targets = 50; // количество оставшихся целей на игровом поле, все цели без пуль, корабля и бонусов. Зависит от уровня, для первого уровня составляет 50 целей.
-        public static int shipSpeed = 1; // максимальное значение - 3, шаг 1
+        public static int shipSpeed = 3; // начальное значение - 1, максимальное значение - 4, шаг 1
         public static int maxShipSpeed = 4;
-        public static int shipRapidFire = 25; // максимальное значение - 150, шаг 5
+        public static int shipRapidFire = 250; // начальное значение - 25, максимальное значение - 400, шаг 5
         public static int maxShipRapidFire = 400;
         // Делегаты для ведения логов игры
-        public delegate void WriteLog(string s);
         static Game()
         {
         }
         public static void Init(Form form)
         {
+            // Проверяем файл логов для отлова эксепшенов, в случае его отсутствия - создаем
+            CheckFiles();
             // Графическое устройство для вывода графики
             Graphics g;
             // Предоставляет доступ к главному буферу графического контекста для текущего приложения
@@ -63,6 +62,9 @@ namespace Asteroids
             if ((resolution.Width < 1600) || (resolution.Height < 900)) throw new ArgumentOutOfRangeException("Form Init", "resolition too low");
             // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+            // Присваиваем делегат на запись логов о создании нового объекта
+            ImgGalaxy.ObjectCreated += LogNewObject;
+            Star.ObjectCreated += LogNewObject;
             // Вызываем рисование определенного количества объектов на поле
             Load(targets);
             // Добавляем таймер обновления прорисовки объектов
@@ -74,9 +76,6 @@ namespace Asteroids
             // Формируем список звезд для заднего фона
             background = new List<BackgroundStar>();
             background = SpaceCreate(Width * Height / 5000);
-            // Проверяем файл логов для отлова эксепшенов, в случае его отсутствия - создаем
-            CheckFiles();
-            Console.WriteLine("CheckFiles complete");
         }
         // Обработчик таймера
         public static void Timer_Tick(object sender, EventArgs e)
@@ -188,8 +187,6 @@ namespace Asteroids
                     break;
             }
             objID++;
-            WriteLog e = LogNewObject;
-            e($"{type}");
         }
         // Проверяем объекты на столкновение, на данный момент столкновение целей между собой невозможно
         private static void CheckConnection()
@@ -276,8 +273,8 @@ namespace Asteroids
             pos.X = obj1.GetPos.X + (obj1.OSize.Width - image.Width) / 2;
             pos.Y = obj1.GetPos.Y + (obj1.OSize.Height - image.Height) / 2;
             // Применяем к обеим целям урон от столкновения
-            int obj1Damage = obj2.OEnergy;
-            int obj2Damage = obj1.OEnergy;
+            int obj1Damage = (obj2.OEnergy < 0) ? 0 : obj2.OEnergy;
+            int obj2Damage = (obj1.OEnergy < 0) ? 0 : obj1.OEnergy;
             obj1.EnergyLow(obj1Damage);
             obj2.EnergyLow(obj2Damage);
             Buffer.Graphics.DrawImage(image, pos);
@@ -291,16 +288,12 @@ namespace Asteroids
             int yStart = _objs[shipIndex].GetPos.Y + 23 + r.Next(3) * 8;
             int xStart = _objs[shipIndex].GetPos.X + _objs[shipIndex].OSize.Width + 1;
             ObjectCreate("Bullet", new Point(xStart, yStart));
-            // _objs.Add(new Bullet(objID, new Point(xStart, yStart), new Point(20, r.Next(5) - 2), new Size(20, 3)));
-            // objID++;
         }
         // Добавляем на игровое поле бонус
         public static void AddBonus()
         {
             int yStart = r.Next(Height);
             ObjectCreate("Ship Bonus", new Point(Width, yStart));
-            WriteLog e = LogEvent;
-            e("Ship Bonus created");
         }
         // Удаление объектов с игрового поля с помощью списка индексов объектов для удаления
         private static void ListRemove(List<int> indexes)
@@ -334,15 +327,13 @@ namespace Asteroids
                 _objs.RemoveAt(indexes[i]);
                 if ((shipIndex > 0) && (indexes[i] < shipIndex)) shipIndex--;
             }
-            // if (_objs.Count == 1) GameOver();
             if (targets <= 0) NextLevel();
         }
         // ПОКА НЕ РАБОТАЕТ Конец игры, тут необходимо добавить сообщение "Конец игры", набранные очки и после этого предложить пользователю выйти или начать новую игру
-        private static void GameOver()
+        private static void GameOver(string s)
         {
-            WriteLog e = LogEvent;
             _timer.Stop();
-            e("PlayerShip destroyed");
+            LogEvent(s);
             Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.OrangeRed, (Width/2-120), (Height/2-30));
             Buffer.Render();
         }

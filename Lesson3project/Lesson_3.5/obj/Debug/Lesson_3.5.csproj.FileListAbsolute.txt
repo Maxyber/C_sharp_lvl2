@@ -1,0 +1,7 @@
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\bin\Debug\Lesson_3.5.exe.config
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\bin\Debug\Lesson_3.5.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\bin\Debug\Lesson_3.5.pdb
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\obj\Debug\Lesson_3.5.csprojAssemblyReference.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\obj\Debug\Lesson_3.5.csproj.CoreCompileInputs.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\obj\Debug\Lesson_3.5.exe
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Lesson3project\Lesson_3.5\obj\Debug\Lesson_3.5.pdb

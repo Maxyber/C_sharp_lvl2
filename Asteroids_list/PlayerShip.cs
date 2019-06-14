@@ -55,7 +55,7 @@ namespace Asteroids
         }
         public override void Die()
         {
-            MessageDie?.Invoke();
+            MessageDie?.Invoke("Player died");
         }
     }
 }

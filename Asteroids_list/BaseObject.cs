@@ -17,7 +17,8 @@ namespace Asteroids
         protected int Energy; // количество жизни каждого из объектов на поле, для пули оно равно 10, для всех остальных - от 25 и выше
         protected int Damage; // ПОКА НЕ ИСПОЛЬЗУЕТСЯ количество урона, который наносит каждый из объектов на поле при столкновении, для корабля 0, для всех остальных больше 0
 
-        public delegate void Message();
+        public delegate void Message(string s);
+
         public BaseObject(int id, Point pos, Point dir, Size size, int energy)
         {
             ID = id;
@@ -58,8 +59,7 @@ namespace Asteroids
             Energy -= damage;
             if (Energy <= 0)
             {
-                Game.WriteLog e = Game.LogEvent;
-                e($"Energy of {ToString()} lower than zero");
+                Game.LogEvent($"Energy of {ToString()} lower than zero");
             }
         }
         public abstract void Die();
