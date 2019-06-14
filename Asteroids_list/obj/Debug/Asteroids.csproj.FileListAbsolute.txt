@@ -67,3 +67,6 @@ K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\
 K:\Arhiv\Documents\Programmer study\Csharp_lvl2\C_sharp_lvl2\Asteroids_list\obj\Debug\Asteroids.pdb
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\bin\Debug\Resources\bonus3.png
 C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Asteroids_list\obj\Debug\Asteroids.csprojAssemblyReference.cache
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\bonus1.png
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\bonus2.png
+C:\Max.personal\C# Уровень 2 (продвинутый)\Задание\C_sharp_lvl2.git\Asteroids_list\bin\Debug\Resources\bonus3.png

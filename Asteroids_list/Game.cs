@@ -76,7 +76,7 @@ namespace Asteroids
             background = SpaceCreate(Width * Height / 5000);
             // Проверяем файл логов для отлова эксепшенов, в случае его отсутствия - создаем
             CheckFiles();
-
+            Console.WriteLine("CheckFiles complete");
         }
         // Обработчик таймера
         public static void Timer_Tick(object sender, EventArgs e)
