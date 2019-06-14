@@ -13,6 +13,8 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
+        // Делегат логирования событий
+        public delegate void MakeLog(string msg);
         // Таймер игры
         public static Timer _timer = new Timer { Interval = 7 };
         // Свойства
@@ -371,12 +373,12 @@ namespace Asteroids
                 Directory.CreateDirectory(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs"));
             }
             if (!File.Exists(@"Logs\logs.txt")) using (File.Create(@"Logs\logs.txt")) { }
-            if (!File.Exists(@"Logs\gamelogs.txt")) using (File.Create(@"Logs\gamelog.txt")) { }
+            if (!File.Exists(@"Logs\gamelogs.txt")) using (File.Create(@"Logs\eventslog.txt")) { }
             if (!File.Exists(@"Logs\gamelogs.txt")) using (File.Create(@"Logs\newobjectslog.txt")) { }
         }
         public static void LogEvent(string s)
         {
-            using (StreamWriter sw = new StreamWriter(@"Logs\gamelog.txt", true))
+            using (StreamWriter sw = new StreamWriter(@"Logs\eventslog.txt", true))
                 sw.WriteLine($"{DateTime.Now} произошло событие {s}");
         }
         public static void LogNewObject(string s)

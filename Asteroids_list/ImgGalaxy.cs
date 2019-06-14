@@ -10,6 +10,7 @@ namespace Asteroids
     class ImgGalaxy : BaseObject
     {
         private Image image;
+
         public ImgGalaxy(int id, Point pos, Point dir, int energy) : base(id, pos, dir, new Size(0, 0), energy)
         {
             image = Image.FromFile($"Resources/galaxy{Game.r.Next(4) + 1}.jpg");
