@@ -10,14 +10,18 @@ namespace Asteroids
     class ImgGalaxy : BaseObject
     {
         private Image image;
-        public ImgGalaxy(int id, Point pos, Point dir) : base(id, pos, dir, new Size(0, 0))
+        public static event Message ObjectCreated;
+
+        public ImgGalaxy(int id, Point pos, Point dir, int energy) : base(id, pos, dir, new Size(0, 0), energy)
         {
             image = Image.FromFile($"Resources/galaxy{Game.r.Next(4) + 1}.jpg");
             OSize = new Size(image.Width, image.Height);
-        }
+            ObjectCreated?.Invoke($"New galaxy created {id}, ({Pos.X},{Pos.Y}), speed: ({dir.X},{dir.Y})");
+    }
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(image, Pos);
+            Game.Buffer.Graphics.DrawRectangle(Pens.Yellow, Pos.X, Pos.Y + OSize.Height + 1, (OEnergy * OSize.Width) / (Game.defaultGalaxyEnergy * Game.level * 5 / 2), 1);
             // ниже идет отладочная строка, которая выводит ID объекта сверху от него
             //Game.Buffer.Graphics.DrawString($"{GetID}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y - 12);
             //Game.Buffer.Graphics.DrawString($"{Pos.X},{Pos.Y}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y + Size.Height + 3);
@@ -61,6 +65,9 @@ namespace Asteroids
                 Pos.Y = Game.r.Next(Game.Height);
             }
             //
+        }
+        public override void Die()
+        {
         }
     }
 }

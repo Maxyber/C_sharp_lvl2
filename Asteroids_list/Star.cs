@@ -9,8 +9,11 @@ namespace Asteroids
 {
     class Star : BaseObject
     {
-        public Star(int id, Point pos, Point dir, Size size) : base(id, pos, dir, size)
+        public static event Message ObjectCreated;
+
+        public Star(int id, Point pos, Point dir, Size size, int energy) : base(id, pos, dir, size, energy)
         {
+            ObjectCreated?.Invoke($"New star created {id}, ({Pos.X},{Pos.Y}), speed: ({dir.X},{dir.Y})");
         }
 
         public override void Draw()
@@ -19,6 +22,8 @@ namespace Asteroids
             Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X + Size.Width * 3 / 4, Pos.Y + Size.Height / 4, Pos.X + Size.Width / 4, Pos.Y + Size.Height * 3 / 4);
             Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X + Size.Width / 2, Pos.Y, Pos.X + Size.Width / 2, Pos.Y + Size.Height);
             Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X, Pos.Y + Size.Height / 2, Pos.X + Size.Width, Pos.Y + Size.Height / 2);
+            // Ниже идет отрисовка значения количества хп звезд
+            // Game.Buffer.Graphics.DrawRectangle(Pens.Yellow, Pos.X, Pos.Y + Size.Height + 1, (OEnergy * Size.Width) / (Game.defaultStarEnergy * Game.level * 5 / 2), 1);
             // ниже идет отладочная строка, которая выводит ID объекта сверху от него
             //Game.Buffer.Graphics.DrawString($"{GetID}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y - 12);
             //Game.Buffer.Graphics.DrawString($"{Pos.X},{Pos.Y}", new Font(FontFamily.GenericSansSerif, 10), new SolidBrush(Color.White), Pos.X, Pos.Y + Size.Height + 3);
@@ -62,6 +67,9 @@ namespace Asteroids
                 Pos.Y = Game.r.Next(Game.Height);
             }
             //
+        }
+        public override void Die()
+        {
         }
     }
 }
