@@ -1,0 +1,14 @@
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\bin\Debug\Lesson_4.exe.config
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\bin\Debug\Lesson_4.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\bin\Debug\Lesson_4.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\obj\Debug\Lesson_4.csproj.CoreCompileInputs.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\obj\Debug\Lesson_4.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\obj\Debug\Lesson_4.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Lesson_4\Lesson_4\obj\Debug\Lesson_4.csprojAssemblyReference.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\bin\Debug\Lesson_4.exe.config
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\bin\Debug\Lesson_4.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\bin\Debug\Lesson_4.pdb
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\obj\Debug\Lesson_4.csprojAssemblyReference.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\obj\Debug\Lesson_4.csproj.CoreCompileInputs.cache
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\obj\Debug\Lesson_4.exe
+C:\Личное\Developer study\C_sharp_lvl2\Задания\Астеройды\Lesson4project\Short\Lesson_4\Lesson_4\obj\Debug\Lesson_4.pdb
